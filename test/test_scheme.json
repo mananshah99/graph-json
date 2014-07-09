@@ -1,0 +1,30 @@
+{
+    "nodes": [
+        {
+            "name": "A"
+        },
+        {
+            "name": "B"
+        },
+        {
+            "name": "C",
+            "data": "__DATA__"
+        },
+        { 
+            "name": "T"
+        }
+    ],
+    "edges": [
+        {
+            "name": "AB",
+            "from": "A",
+            "to": "B",
+            "data" : "__DATA__"
+        },
+        {
+            "name": "BC",
+            "from": "B",
+            "to": "C"
+        }
+    ]
+}
