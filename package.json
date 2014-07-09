@@ -1,10 +1,13 @@
 {
   "name": "graph-json",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A JSON-format backed graph with basic identification algorithms.",
-  "main": "graph.js",
+  "main": "lib/graph.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
+  },
+  "directories": {
+    "test": "test"
   },
   "keywords": [
     "graph",
@@ -12,9 +15,17 @@
     "algorithm",
     "node"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mananshah99/graph-json"
+  },
+  "bugs": {
+  "url": "https://github.com/mananshah99/graph-json/issues"
+},
   "dependencies": {
     "JSV": "~4.0.0"
   },
   "author": "manan <manan.shah.777@gmail.com>",
   "license": "MIT"
+  "readmeFilename": "README.md",
 }
