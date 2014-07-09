@@ -20,12 +20,12 @@
     "url": "https://github.com/mananshah99/graph-json"
   },
   "bugs": {
-  "url": "https://github.com/mananshah99/graph-json/issues"
-},
+    "url": "https://github.com/mananshah99/graph-json/issues"
+  },
   "dependencies": {
     "JSV": "~4.0.0"
   },
   "author": "manan <manan.shah.777@gmail.com>",
-  "license": "MIT"
-  "readmeFilename": "README.md",
+  "license": "MIT",
+  "readmeFilename": "README.md"
 }
