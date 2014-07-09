@@ -1,6 +1,6 @@
 {
   "name": "graph-json",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A JSON-format backed graph with basic identification algorithms.",
   "main": "graph.js",
   "scripts": {
@@ -12,6 +12,9 @@
     "algorithm",
     "node"
   ],
+  "dependencies": {
+    "JSV": "~4.0.0"
+  },
   "author": "manan <manan.shah.777@gmail.com>",
   "license": "MIT"
 }
