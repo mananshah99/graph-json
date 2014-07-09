@@ -1,0 +1,17 @@
+{
+  "name": "graph-json",
+  "version": "0.0.1",
+  "description": "A JSON-format backed graph with basic identification algorithms.",
+  "main": "graph.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "graph",
+    "JSON",
+    "algorithm",
+    "node"
+  ],
+  "author": "manan <manan.shah.777@gmail.com>",
+  "license": "MIT"
+}
