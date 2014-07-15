@@ -1,3 +1,10 @@
+/**
+ * According to the schema, we have 
+ *  A -> B -> C
+ *
+ * Simple tests for functionality (so nothing breaks when a new feature is added)
+**/
+
 var assert = require('assert');
 var graph = require('../lib/graph.js');
 var ts = require('./test_scheme.json');
@@ -40,5 +47,10 @@ describe('Graph Creation', function () {
 
     it('Determine terminal nodes', function () {
         assert(graph_.isTerminal('T'));
+    });
+
+    it('Tests DFS', function() {
+        assert(graph_.dfs('B', 'A', graph_) === graph_.getNode('B'));
+        assert(graph_.dfs('dne', 'A', graph_) === null);
     });
 });
