@@ -4,30 +4,30 @@
  *
  * Simple tests for functionality (so nothing breaks when a new feature is added)
 **/
+/*global require, describe, before, it*/
 
 var assert = require('assert');
-var graph = require('../lib/graph.js');
+var Graph = require('../lib/graph.js');
 var ts = require('./test_scheme.json');
 
 describe('Graph Creation', function () {
-    var graph_ = null;
+    'use strict';
+    var t_graph = null;
     before(function () {
-        graph_ = new graph(ts);
+        t_graph = new Graph(ts);
     });
 
     it('Edges and Nodes Exist', function () {
-        assert(graph_);
-        assert(graph_.nodes);
-        assert(graph_.edges);
+        assert(t_graph);
+        assert(t_graph.nodes);
+        assert(t_graph.edges);
     });
 
     it('Find Nodes and Edges by Name', function () {
-        var node = graph_.getNode('C');
+        var node = t_graph.getNode('C'), edge = t_graph.getEdge('BC');
         assert(typeof node === "object");
         assert(node.name === "C");
         assert(node.data === "__DATA__");
-        
-        var edge = graph_.getEdge('BC');
         
         assert(typeof edge === "object");
         assert(edge.from === "B");
@@ -36,21 +36,21 @@ describe('Graph Creation', function () {
     });
 
     it('Get edges leaving from node', function () {
-        var x = graph_.edgesOut('A');
+        var x = t_graph.edgesOut('A');
         assert(x[0].to === 'B');
     });
 
     it('Get edges entering node', function () {
-        var x = graph_.edgesIn('B');
+        var x = t_graph.edgesIn('B');
         assert(x[0].from === 'A');
     });
 
     it('Determine terminal nodes', function () {
-        assert(graph_.isTerminal('T'));
+        assert(t_graph.isTerminal('T'));
     });
 
-    it('Tests DFS', function() {
-        assert(graph_.dfs('B', 'A', graph_) === graph_.getNode('B'));
-        assert(graph_.dfs('dne', 'A', graph_) === null);
+    it('Tests DFS', function () {
+        assert(t_graph.dfs('B', 'A', t_graph) === t_graph.getNode('B'));
+        assert(t_graph.dfs('dne', 'A', t_graph) === null);
     });
 });
