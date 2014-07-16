@@ -211,7 +211,7 @@ var ts = require('./test_scheme.json');
 t_graph = new Graph(ts);
 x = hangingEdges(t_graph, t_graph.edges);
 if (x.length !== 0) {
-    return new ValidationError('Hanging Edges Found: ', x); # ==> uh-oh! We have hanging edges in the graph.
+    return new ValidationError('Hanging Edges Found: ', x); // # ==> uh-oh! We have hanging edges in the graph.
 }
 // #==> seeing as the test graph is properly defined, no validation error will be thrown.
 ```
