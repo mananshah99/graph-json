@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Graph-JSON by mananshah99</title>
+    <title>graph-json by mananshah99</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -15,7 +15,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Graph-JSON</h1>
+        <h1>graph-json</h1>
         <p>A JSON-format backed graph with preliminary identification algorithms</p>
 
         <p class="view"><a href="https://github.com/mananshah99/graph-json">View the Project on GitHub <small>mananshah99/graph-json</small></a></p>
@@ -29,54 +29,236 @@
       </header>
       <section>
         <h1>
-<a name="graph-json" class="anchor" href="#graph-json"><span class="octicon octicon-link"></span></a>Graph-JSON</h1>
+<a name="graph-json--" class="anchor" href="#graph-json--"><span class="octicon octicon-link"></span></a>graph-json <a href="https://travis-ci.org/mananshah99/graph-json"><img src="https://travis-ci.org/mananshah99/graph-json.svg?branch=master" alt="Build Status"></a> <a href="http://badge.fury.io/js/graph-json"><img src="https://badge.fury.io/js/graph-json.svg" alt="NPM version"></a>
+</h1>
 
 <p><a href="https://nodei.co/npm/graph-json/"><img src="https://nodei.co/npm/graph-json.png?downloads=true" alt="NPM"></a></p>
 
 <p>A JSON-format backed graph with basic identification algorithms. </p>
 
-<p>JSON Scheme: </p>
+<h2>
+<a name="json-scheme" class="anchor" href="#json-scheme"><span class="octicon octicon-link"></span></a>JSON Scheme:</h2>
 
-<pre><code>{
-    "type": "object",
-    "properties": {
-        "nodes": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "required": true
-                    }
-                }
-            }
-        },
-        "edges": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "required": true
-                    },
-                    "from": {
-                        "type": "string",
-                        "required": true
-                    },
-                    "to": {
-                        "type": "string",
-                        "required": true
-                    }
-                }
-            }
-        }
-    }
-}
-</code></pre>
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
+    <span class="nt">"properties"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"nodes"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span>
+            <span class="nt">"items"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
+                <span class="nt">"properties"</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">"name"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span>
+                        <span class="nt">"required"</span><span class="p">:</span> <span class="kc">true</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nt">"edges"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span>
+            <span class="nt">"items"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
+                <span class="nt">"properties"</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">"name"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span>
+                        <span class="nt">"required"</span><span class="p">:</span> <span class="kc">true</span>
+                    <span class="p">},</span>
+                    <span class="nt">"from"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span>
+                        <span class="nt">"required"</span><span class="p">:</span> <span class="kc">true</span>
+                    <span class="p">},</span>
+                    <span class="nt">"to"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span>
+                        <span class="nt">"required"</span><span class="p">:</span> <span class="kc">true</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 
-<p>View the source for more information. </p>
+<h2>
+<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<h3>
+<a name="function-validationerrormessage-err" class="anchor" href="#function-validationerrormessage-err"><span class="octicon octicon-link"></span></a>function ValidationError(message, err)</h3>
+
+<p>Specific error to the <code>graph-json</code> module that is thrown whenever a portion of the graph schema is unable to validated properly. </p>
+
+<p>Potential times this error would be thrown are if: a) hanging edges exist in the graph, b) the JSON file provided does not match the default specification, c) no JSON file is provided, d) duplicate nodes are provided in the JSON file, or e) duplicate edges are provided in the JSON file.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">scheme</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./scheme.json'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">test</span> <span class="o">=</span> <span class="nx">validator</span><span class="p">.</span><span class="nx">validate</span><span class="p">(</span><span class="nx">struct</span><span class="p">,</span> <span class="nx">scheme</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">test</span><span class="p">.</span><span class="nx">errors</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">ValidationError</span><span class="p">(</span><span class="s1">'Validation of Graph Failed: '</span><span class="p">,</span> <span class="nx">test</span><span class="p">.</span><span class="nx">errors</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="function-graphstruct" class="anchor" href="#function-graphstruct"><span class="octicon octicon-link"></span></a>function Graph(struct)</h3>
+
+<p>Creates a graph based on the structure defined (a <code>.json</code> file matching the specification). </p>
+
+<p>An example graph would look like the following (used in the remainder of the documentation) </p>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"nodes"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"A"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"B"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"C"</span><span class="p">,</span>
+            <span class="nt">"data"</span><span class="p">:</span> <span class="s2">"__DATA__"</span>
+        <span class="p">},</span>
+        <span class="p">{</span> 
+            <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"T"</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">"edges"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"AB"</span><span class="p">,</span>
+            <span class="nt">"from"</span><span class="p">:</span> <span class="s2">"A"</span><span class="p">,</span>
+            <span class="nt">"to"</span><span class="p">:</span> <span class="s2">"B"</span><span class="p">,</span>
+            <span class="nt">"data"</span> <span class="p">:</span> <span class="s2">"__DATA__"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"BC"</span><span class="p">,</span>
+            <span class="nt">"from"</span><span class="p">:</span> <span class="s2">"B"</span><span class="p">,</span>
+            <span class="nt">"to"</span><span class="p">:</span> <span class="s2">"C"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="graphprototypeedgesin--function-node" class="anchor" href="#graphprototypeedgesin--function-node"><span class="octicon octicon-link"></span></a>Graph.prototype.edgesIn = function (node)</h3>
+
+<p>Returns the number of edges entering a given node. </p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+
+<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">t_graph</span><span class="p">.</span><span class="nx">edgesIn</span><span class="p">(</span><span class="s1">'B'</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">from</span><span class="p">);</span> <span class="c1">// #==&gt; for the test graph, should print 'A'</span>
+</pre></div>
+
+<h3>
+<a name="graphprototypeedgesout--function-node" class="anchor" href="#graphprototypeedgesout--function-node"><span class="octicon octicon-link"></span></a>Graph.prototype.edgesOut = function (node)</h3>
+
+<p>Returns the number of edges exiting a given node. </p>
+
+<p>Returns the number of edges entering a given node. </p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+
+<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">t_graph</span><span class="p">.</span><span class="nx">edgesOut</span><span class="p">(</span><span class="s1">'A'</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">to</span><span class="p">)</span> <span class="c1">// #==&gt; for the test graph, should print 'B'</span>
+</pre></div>
+
+<h3>
+<a name="graphprototypegetnode--function-id" class="anchor" href="#graphprototypegetnode--function-id"><span class="octicon octicon-link"></span></a>Graph.prototype.getNode = function (id)</h3>
+
+<p>Returns a node contained in the graph with the given name, <code>id</code>.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+
+<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">node</span> <span class="o">=</span> <span class="nx">t_graph</span><span class="p">.</span><span class="nx">getNode</span><span class="p">(</span><span class="s1">'C'</span><span class="p">);</span> <span class="c1">// #==&gt; assigns the variable node to the node of the graph with name 'C'</span>
+</pre></div>
+
+<h3>
+<a name="graphprototypenumnodes--function-" class="anchor" href="#graphprototypenumnodes--function-"><span class="octicon octicon-link"></span></a>Graph.prototype.numNodes = function ()</h3>
+
+<p>Returns the number of nodes contained in the graph.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+
+<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">numNodes</span><span class="p">());</span> <span class="c1">// #==&gt; prints '3' for the test graph</span>
+</pre></div>
+
+<h3>
+<a name="graphprorotypegetedge--function-id" class="anchor" href="#graphprorotypegetedge--function-id"><span class="octicon octicon-link"></span></a>Graph.prorotype.getEdge = function (id)</h3>
+
+<p>Returns an edge contained in the graph with the given name, <code>id</code>.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+
+<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">edge</span> <span class="o">=</span> <span class="nx">t_graph</span><span class="p">.</span><span class="nx">getEdge</span><span class="p">(</span><span class="s1">'BC'</span><span class="p">);</span> <span class="c1">// #==&gt; assigns the variable edge to the edge of the graph with name 'BC'</span>
+</pre></div>
+
+<h3>
+<a name="graphprototypenumedges--function-" class="anchor" href="#graphprototypenumedges--function-"><span class="octicon octicon-link"></span></a>Graph.prototype.numEdges = function ()</h3>
+
+<p>Returns the number of edges contained in the graph.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+
+<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">numEdges</span><span class="p">())</span> <span class="c1">// #==&gt; prints '2' for the test graph</span>
+</pre></div>
+
+<h3>
+<a name="graphprototypeisterminal--function-node" class="anchor" href="#graphprototypeisterminal--function-node"><span class="octicon octicon-link"></span></a>Graph.prototype.isTerminal = function (node)</h3>
+
+<p>Returns <code>true</code> if the specified node is ternminal (has no children), and false otherwise. </p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">isTerminal</span><span class="p">(</span><span class="s1">'T'</span><span class="p">));</span> <span class="c1">// #==&gt; prints 'true' for the test graph</span>
+</pre></div>
+
+<h3>
+<a name="graphprototypedfs--function-to_find-node-graph" class="anchor" href="#graphprototypedfs--function-to_find-node-graph"><span class="octicon octicon-link"></span></a>Graph.prototype.dfs = function (to_find, node, graph)</h3>
+
+<p>Performs a depth-first-search on the given graph, searching for <code>to_find</code> starting from <code>node</code>. </p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+
+<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">((</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">dfs</span><span class="p">(</span><span class="s1">'B'</span><span class="p">,</span> <span class="s1">'A'</span><span class="p">,</span> <span class="nx">t_graph</span><span class="p">));</span> <span class="c1">// # ==&gt; prints 'B' for the test graph (search successful) </span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">((</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">dfs</span><span class="p">(</span><span class="s1">'dne'</span><span class="p">,</span> <span class="s1">'A'</span><span class="p">,</span> <span class="nx">t_graph</span><span class="p">));</span> <span class="c1">// #==&gt; prints 'null' for the test graph (search failed) </span>
+</pre></div>
+
+<h3>
+<a name="function-hangingedgesgraph-edges" class="anchor" href="#function-hangingedgesgraph-edges"><span class="octicon octicon-link"></span></a>function hangingEdges(graph, edges)</h3>
+
+<p>Returns an array of the "hanging edges" - edges that either have no <code>from</code> or <code>to</code> node defined - in the current graph schema. </p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+
+<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
+<span class="nx">x</span> <span class="o">=</span> <span class="nx">hangingEdges</span><span class="p">(</span><span class="nx">t_graph</span><span class="p">,</span> <span class="nx">t_graph</span><span class="p">.</span><span class="nx">edges</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">x</span><span class="p">.</span><span class="nx">length</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">ValidationError</span><span class="p">(</span><span class="s1">'Hanging Edges Found: '</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span> <span class="err">#</span> <span class="o">==&gt;</span> <span class="nx">uh</span><span class="o">-</span><span class="nx">oh</span><span class="o">!</span> <span class="nx">We</span> <span class="nx">have</span> <span class="nx">hanging</span> <span class="nx">edges</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">graph</span><span class="p">.</span>
+<span class="p">}</span>
+<span class="c1">// #==&gt; seeing as the test graph is properly defined, no validation error will be thrown.</span>
+</pre></div>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/mananshah99">mananshah99</a></p>
