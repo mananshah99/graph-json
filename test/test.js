@@ -14,8 +14,14 @@ describe('Graph Creation', function () {
     'use strict';
     var t_graph = null;
     before(function () {
-        t_graph = new Graph(ts);
+        t_graph = new Graph(ts, './test_scheme.json');
     });
+    
+    /*it('writes to a JSON file', function () {
+        var x = t_graph.testJSON();
+        t_graph.addNode();
+        assert(x === 0);
+    });*/
 
     it('Edges and Nodes Exist', function () {
         assert(t_graph);
