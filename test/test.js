@@ -18,11 +18,15 @@ describe('Graph Creation', function () {
         t_graph = new Graph(ts);
     });
     
-    it('Can add a node to the struct', function() {
+    it('Can add a node', function() {
         t_graph.addNode("XYZ");
     });
     
-    it('Can add an edge to the struct', function() {
+    it('Can add a node with data', function() {
+        t_graph.addNode("DAT", "some data");
+    });
+    
+    it('Can add an edge', function() {
         t_graph.addEdge("sample-edge", "A", "XYZ", "__DATA__");
     });
     
