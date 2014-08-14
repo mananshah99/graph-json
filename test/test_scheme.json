@@ -10,8 +10,14 @@
             "name": "C",
             "data": "__DATA__"
         },
-        { 
+        {
             "name": "T"
+        },
+        {
+            "name": "A"
+        },
+        {
+            "name": "B"
         }
     ],
     "edges": [
@@ -19,12 +25,18 @@
             "name": "AB",
             "from": "A",
             "to": "B",
-            "data" : "__DATA__"
+            "data": "__DATA__"
         },
         {
             "name": "BC",
             "from": "B",
             "to": "C"
+        },
+        {
+            "name": "AB",
+            "from": "A",
+            "to": "B",
+            "data": "X"
         }
     ]
 }

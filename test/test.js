@@ -14,16 +14,17 @@ describe('Graph Creation', function () {
     'use strict';
     var t_graph = null;
     before(function () {
-        t_graph = new Graph(ts, './test_scheme.json');
+        console.log("Working directory: " + process.cwd());
+        t_graph = new Graph(ts, './test/test_scheme.json');
     });
     /*
     it('works for a null input', function() {
         t_graph = new Graph(null, 'c:/users/manan/desktop/graph.json');
     });*/
     it('writes to a JSON file', function () {
-        var x = t_graph.testJSON();
-        //t_graph.addNode();
-        assert(x === 0);
+        t_graph.addNode("X");
+        t_graph.addNode("Y");
+        t_graph.addEdge("XY", "X", "Y", "__DATA__");
     });
 
     it('Edges and Nodes Exist', function () {
