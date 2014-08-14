@@ -13,6 +13,7 @@ var ts = JSON.parse(fs.readFileSync('./test/test_scheme.json'));
 
 describe('Graph Creation', function () {
     'use strict';
+    
     var t_graph = null;
     before(function () {
         t_graph = new Graph(ts);
@@ -43,11 +44,15 @@ describe('Graph Creation', function () {
     
     it('Can add an adge without data', function() {
         t_graph.addEdge("B->XYZ", "B", "XYZ");
+        console.dir(t_graph);
+    });
+    
+    it('Can add a sequence of nodes ', function() {
+        t_graph.add('F', 'G', 'H', 'I', 'J');
     });
     
     it('Can perform a topological sort', function () {
-        var x = t_graph.tSort();
-        assert (('' + x) === 'A,B,C,XYZ');
+        t_graph.tSort();
     });
     
     it('Will find acyclic graphs', function() {
