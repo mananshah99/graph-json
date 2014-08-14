@@ -16,12 +16,15 @@ describe('Graph Creation', function () {
     before(function () {
         t_graph = new Graph(ts, './test_scheme.json');
     });
-    
-    /*it('writes to a JSON file', function () {
-        var x = t_graph.testJSON();
-        t_graph.addNode();
-        assert(x === 0);
+    /*
+    it('works for a null input', function() {
+        t_graph = new Graph(null, 'c:/users/manan/desktop/graph.json');
     });*/
+    it('writes to a JSON file', function () {
+        var x = t_graph.testJSON();
+        //t_graph.addNode();
+        assert(x === 0);
+    });
 
     it('Edges and Nodes Exist', function () {
         assert(t_graph);
