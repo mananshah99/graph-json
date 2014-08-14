@@ -18,6 +18,17 @@ describe('Graph Creation', function () {
         t_graph = new Graph(ts);
     });
     
+    it('Can instantiate a graph with no structure', function () {
+        var no_structure = new Graph();
+        console.dir(no_structure);
+    });
+    
+    it('Has edges and nodes', function () {
+        assert(t_graph);
+        assert(t_graph.nodes);
+        assert(t_graph.edges);
+    });
+    
     it('Can add a node', function() {
         t_graph.addNode("XYZ");
     });
@@ -39,26 +50,13 @@ describe('Graph Creation', function () {
         assert (('' + x) === 'A,B,C,XYZ');
     });
     
-    it('Will throw an error if graph is cyclic', function() {
-        t_graph.addEdge('cyclic-edge', 'C', 'A', '-no-data-');
-        try {
-            t_graph.tSort();
-        }
-        catch(e) {
-            console.dir(e.message);
-            
-            assert(e.message === "There is a cycle in the graph. It is not possible to derive a topological sort.");
-        }
+    it('Will find acyclic graphs', function() {
+        t_graph.addEdge('cyclic-edge', 'C', 'A');
+        assert(t_graph.isAcyclic() === false);
     });
     
     it('Prints the structure of a graph after addition of nodes and edges', function() {
         console.dir(t_graph);
-    });
-
-    it('Has edges and nodes', function () {
-        assert(t_graph);
-        assert(t_graph.nodes);
-        assert(t_graph.edges);
     });
 
     it('Can find nodes and edges by Name', function () {
