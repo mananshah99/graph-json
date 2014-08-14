@@ -26,6 +26,10 @@ describe('Graph Creation', function () {
         t_graph.addEdge("sample-edge", "A", "XYZ", "__DATA__");
     });
     
+    it('Can add an adge without data', function() {
+        t_graph.addEdge("B->XYZ", "B", "XYZ");
+    });
+    
     it('Can perform a topological sort', function () {
         var x = t_graph.tSort();
         assert (('' + x) === 'A,B,C,XYZ');
