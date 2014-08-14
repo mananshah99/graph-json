@@ -8,32 +8,35 @@
 
 var assert = require('assert');
 var Graph = require('../lib/graph.js');
-var ts = require('./test_scheme.json');
+var fs = require('fs');
+var ts = JSON.parse(fs.readFileSync('./test/test_scheme.json'));
 
 describe('Graph Creation', function () {
     'use strict';
     var t_graph = null;
     before(function () {
-        console.log("Working directory: " + process.cwd());
-        t_graph = new Graph(ts, './test/test_scheme.json');
+        t_graph = new Graph(ts);
     });
-    /*
-    it('works for a null input', function() {
-        t_graph = new Graph(null, 'c:/users/manan/desktop/graph.json');
-    });*/
-    it('writes to a JSON file', function () {
-        t_graph.addNode("X");
-        t_graph.addNode("Y");
-        t_graph.addEdge("XY", "X", "Y", "__DATA__");
+    
+    it('Can add a node to the struct', function() {
+        t_graph.addNode("XYZ");
+    });
+    
+    it('Can add an edge to the struct', function() {
+        t_graph.addEdge("sample-edge", "A", "XYZ", "__DATA__");
+    });
+    
+    it('Prints the structure of a graph after addition of nodes and edges', function() {
+        console.dir(t_graph);
     });
 
-    it('Edges and Nodes Exist', function () {
+    it('Has edges and nodes', function () {
         assert(t_graph);
         assert(t_graph.nodes);
         assert(t_graph.edges);
     });
 
-    it('Find Nodes and Edges by Name', function () {
+    it('Can find nodes and edges by Name', function () {
         var node = t_graph.getNode('C'), edge = t_graph.getEdge('BC');
         assert(typeof node === "object");
         assert(node.name === "C");
@@ -45,18 +48,19 @@ describe('Graph Creation', function () {
         assert(edge.name === "BC");
     });
 
-    it('Get edges leaving from node', function () {
+    it('Can get edges leaving from a node', function () {
         var x = t_graph.edgesOut('A');
         assert(x[0].to === 'B');
     });
 
-    it('Get edges entering node', function () {
+    it('Can get edges entering a node', function () {
         var x = t_graph.edgesIn('B');
         assert(x[0].from === 'A');
     });
 
-    it('Determine terminal nodes', function () {
+    it('Can determine terminal nodes', function () {
         assert(t_graph.isTerminal('T'));
+        assert(!t_graph.isTerminal('A'));
     });
 
     it('Tests DFS', function () {
