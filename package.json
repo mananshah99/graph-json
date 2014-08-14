@@ -23,7 +23,8 @@
     "url": "https://github.com/mananshah99/graph-json/issues"
   },
   "dependencies": {
-    "JSV": "~4.0.0"
+    "JSV": "~4.0.0",
+    "tsort": "0.0.1"
   },
   "author": "manan <manan.shah.777@gmail.com>",
   "license": "MIT",
