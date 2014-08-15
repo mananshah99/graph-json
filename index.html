@@ -92,6 +92,7 @@
 
 <div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">scheme</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./scheme.json'</span><span class="p">);</span>
 
+<span class="c1">//struct is the graph structure that's passed in</span>
 <span class="kd">var</span> <span class="nx">test</span> <span class="o">=</span> <span class="nx">validator</span><span class="p">.</span><span class="nx">validate</span><span class="p">(</span><span class="nx">struct</span><span class="p">,</span> <span class="nx">scheme</span><span class="p">);</span>
 <span class="k">if</span> <span class="p">(</span><span class="nx">test</span><span class="p">.</span><span class="nx">errors</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nx">ValidationError</span><span class="p">(</span><span class="s1">'Validation of Graph Failed: '</span><span class="p">,</span> <span class="nx">test</span><span class="p">.</span><span class="nx">errors</span><span class="p">);</span>
@@ -99,11 +100,11 @@
 </pre></div>
 
 <h3>
-<a name="function-graphstruct" class="anchor" href="#function-graphstruct"><span class="octicon octicon-link"></span></a>function Graph(struct)</h3>
+<a name="function-graphstruct" class="anchor" href="#function-graphstruct"><span class="octicon octicon-link"></span></a>function Graph([struct])</h3>
 
-<p>Creates a graph based on the structure defined (a <code>.json</code> file matching the specification). </p>
+<p>Creates a graph based on the structure defined (a <code>.json</code> object matching the specification), or creates a graph with no edges and nodes if <code>struct</code> is not specified. </p>
 
-<p>An example graph would look like the following (used in the remainder of the documentation) </p>
+<p>An example struct would look like the following (used in the remainder of the documentation) </p>
 
 <div class="highlight highlight-json"><pre><span class="p">{</span>
     <span class="nt">"nodes"</span><span class="p">:</span> <span class="p">[</span>
@@ -137,6 +138,22 @@
 <span class="p">}</span>
 </pre></div>
 
+<p>In order to create a graph, you'll want to parse your JSON object and pass it as a parameter. For example, </p>
+
+<div class="highlight highlight-js"><pre><span class="c1">//g is the JSON parsed object of graph.json located in the executing directory</span>
+<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+
+<span class="c1">//t_graph is the graph created from graph.json</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
+</pre></div>
+
+<p>Or, you can create a graph without specifying a JSON file: </p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">();</span>
+</pre></div>
+
+<p>The graph above contains no nodes and no edges. </p>
+
 <h3>
 <a name="graphprototypeedgesin--function-node" class="anchor" href="#graphprototypeedgesin--function-node"><span class="octicon octicon-link"></span></a>Graph.prototype.edgesIn = function (node)</h3>
 
@@ -144,9 +161,9 @@
 
 <p>Example:</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
 
-<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">t_graph</span><span class="p">.</span><span class="nx">edgesIn</span><span class="p">(</span><span class="s1">'B'</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">from</span><span class="p">);</span> <span class="c1">// #==&gt; for the test graph, should print 'A'</span>
 </pre></div>
@@ -156,13 +173,11 @@
 
 <p>Returns the number of edges exiting a given node. </p>
 
-<p>Returns the number of edges entering a given node. </p>
-
 <p>Example:</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
 
-<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">t_graph</span><span class="p">.</span><span class="nx">edgesOut</span><span class="p">(</span><span class="s1">'A'</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">to</span><span class="p">)</span> <span class="c1">// #==&gt; for the test graph, should print 'B'</span>
 </pre></div>
@@ -170,13 +185,13 @@
 <h3>
 <a name="graphprototypegetnode--function-id" class="anchor" href="#graphprototypegetnode--function-id"><span class="octicon octicon-link"></span></a>Graph.prototype.getNode = function (id)</h3>
 
-<p>Returns a node contained in the graph with the given name, <code>id</code>.</p>
+<p>Returns a node contained in the graph with the given name (<code>id</code>).</p>
 
 <p>Example:</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
 
-<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">node</span> <span class="o">=</span> <span class="nx">t_graph</span><span class="p">.</span><span class="nx">getNode</span><span class="p">(</span><span class="s1">'C'</span><span class="p">);</span> <span class="c1">// #==&gt; assigns the variable node to the node of the graph with name 'C'</span>
 </pre></div>
 
@@ -187,22 +202,22 @@
 
 <p>Example:</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
 
-<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">numNodes</span><span class="p">());</span> <span class="c1">// #==&gt; prints '3' for the test graph</span>
 </pre></div>
 
 <h3>
 <a name="graphprorotypegetedge--function-id" class="anchor" href="#graphprorotypegetedge--function-id"><span class="octicon octicon-link"></span></a>Graph.prorotype.getEdge = function (id)</h3>
 
-<p>Returns an edge contained in the graph with the given name, <code>id</code>.</p>
+<p>Returns an edge contained in the graph with the given name (<code>id</code>).</p>
 
 <p>Example:</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
 
-<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">edge</span> <span class="o">=</span> <span class="nx">t_graph</span><span class="p">.</span><span class="nx">getEdge</span><span class="p">(</span><span class="s1">'BC'</span><span class="p">);</span> <span class="c1">// #==&gt; assigns the variable edge to the edge of the graph with name 'BC'</span>
 </pre></div>
 
@@ -213,10 +228,23 @@
 
 <p>Example:</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
 
-<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">numEdges</span><span class="p">())</span> <span class="c1">// #==&gt; prints '2' for the test graph</span>
+</pre></div>
+
+<h3>
+<a name="graphprototypeedges--function-" class="anchor" href="#graphprototypeedges--function-"><span class="octicon octicon-link"></span></a>Graph.prototype.edges = function ()</h3>
+
+<p>Returns the edges array internally stored in <code>graph-json</code>. </p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">edge_array</span> <span class="o">=</span> <span class="nx">t_graph</span><span class="p">.</span><span class="nx">edges</span><span class="p">();</span>
 </pre></div>
 
 <h3>
@@ -226,8 +254,9 @@
 
 <p>Example:</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
-<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
+
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">isTerminal</span><span class="p">(</span><span class="s1">'T'</span><span class="p">));</span> <span class="c1">// #==&gt; prints 'true' for the test graph</span>
 </pre></div>
 
@@ -238,10 +267,10 @@
 
 <p>Example:</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
 
-<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">((</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">dfs</span><span class="p">(</span><span class="s1">'B'</span><span class="p">,</span> <span class="s1">'A'</span><span class="p">,</span> <span class="nx">t_graph</span><span class="p">));</span> <span class="c1">// # ==&gt; prints 'B' for the test graph (search successful) </span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">((</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">dfs</span><span class="p">(</span><span class="s1">'B'</span><span class="p">,</span> <span class="s1">'A'</span><span class="p">,</span> <span class="nx">t_graph</span><span class="p">));</span> <span class="c1">// #==&gt; prints 'B' for the test graph (search successful) </span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">((</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">dfs</span><span class="p">(</span><span class="s1">'dne'</span><span class="p">,</span> <span class="s1">'A'</span><span class="p">,</span> <span class="nx">t_graph</span><span class="p">));</span> <span class="c1">// #==&gt; prints 'null' for the test graph (search failed) </span>
 </pre></div>
 
@@ -250,14 +279,88 @@
 
 <p>Returns an array of the "hanging edges" - edges that either have no <code>from</code> or <code>to</code> node defined - in the current graph schema. </p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./test_scheme.json'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
 
-<span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">ts</span><span class="p">);</span>
-<span class="nx">x</span> <span class="o">=</span> <span class="nx">hangingEdges</span><span class="p">(</span><span class="nx">t_graph</span><span class="p">,</span> <span class="nx">t_graph</span><span class="p">.</span><span class="nx">edges</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">hangingEdges</span><span class="p">(</span><span class="nx">t_graph</span><span class="p">,</span> <span class="nx">t_graph</span><span class="p">.</span><span class="nx">edges</span><span class="p">);</span>
 <span class="k">if</span> <span class="p">(</span><span class="nx">x</span><span class="p">.</span><span class="nx">length</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nx">ValidationError</span><span class="p">(</span><span class="s1">'Hanging Edges Found: '</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span> <span class="c1">// # ==&gt; uh-oh! We have hanging edges in the graph.</span>
 <span class="p">}</span>
 <span class="c1">// #==&gt; seeing as the test graph is properly defined, no validation error will be thrown.</span>
+</pre></div>
+
+<h3>
+<a name="graphprototypeaddnode--function-name-dt" class="anchor" href="#graphprototypeaddnode--function-name-dt"><span class="octicon octicon-link"></span></a>Graph.prototype.addNode = function (name, [dt])</h3>
+
+<p>Adds a node to the graph with an optional parameter containing data. </p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
+
+<span class="nx">g</span><span class="p">.</span><span class="nx">addNode</span><span class="p">(</span><span class="s1">'A'</span><span class="p">);</span> <span class="c1">// adds node 'A' to the graph</span>
+<span class="nx">g</span><span class="p">.</span><span class="nx">addNode</span><span class="p">(</span><span class="s1">'B'</span><span class="p">,</span> <span class="s1">'xyz'</span><span class="p">);</span> <span class="c1">// adds node 'B' to the graph, with data xyz</span>
+</pre></div>
+
+<h3>
+<a name="graphprototypeaddedge--function-name-from-to-dt" class="anchor" href="#graphprototypeaddedge--function-name-from-to-dt"><span class="octicon octicon-link"></span></a>Graph.prototype.addEdge = function (name, from, to, [dt])</h3>
+
+<p>Adds an edge to the graph with an optional parameter containing data.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
+
+<span class="nx">g</span><span class="p">.</span><span class="nx">addEdge</span><span class="p">(</span><span class="s1">'A-&gt;B'</span><span class="p">,</span> <span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">);</span> <span class="c1">// adds edge 'A-&gt;B' to the graph from node A to node B</span>
+<span class="nx">g</span><span class="p">.</span><span class="nx">addEdge</span><span class="p">(</span><span class="s1">'A-&gt;C'</span><span class="p">,</span> <span class="s1">'A'</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">,</span> <span class="s1">'10'</span><span class="p">);</span> <span class="c1">// adds edge 'A-&gt;C' to the graph from node A to node C with data 10</span>
+</pre></div>
+
+<h3>
+<a name="graphprototypeadd--functionnodes" class="anchor" href="#graphprototypeadd--functionnodes"><span class="octicon octicon-link"></span></a>Graph.prototype.add = function([nodes...])</h3>
+
+<p>Adds any number of nodes to a graph, automatically creating the nodes if they do not exist and creating edges between each adjacent node.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
+
+<span class="c1">// the following creates nodes 'a', 'b', 'c', and 'd' if they do not exist,</span>
+<span class="c1">// and then creates the edges a-&gt;b, b-&gt;c, and c-&gt;d</span>
+<span class="nx">t_graph</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span> <span class="s1">'d'</span><span class="p">);</span> 
+</pre></div>
+
+<h3>
+<a name="graphprototypetsort--function-" class="anchor" href="#graphprototypetsort--function-"><span class="octicon octicon-link"></span></a>Graph.prototype.tSort = function ()</h3>
+
+<p>Topologically sorts the graph and returns the resulting node array.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">tSort</span><span class="p">());</span> <span class="c1">//prints a comma-delimited topologically sorted node order of t_graph</span>
+</pre></div>
+
+<h3>
+<a name="graphprototypeisacyclic--function-" class="anchor" href="#graphprototypeisacyclic--function-"><span class="octicon octicon-link"></span></a>Graph.prototype.isAcyclic = function ()</h3>
+
+<p>Returns <code>true</code> if the graph is acyclic, <code>false</code> otherwise. Uses a topological sort under the hood. </p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">'./graph.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">t_graph</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Graph</span><span class="p">(</span><span class="nx">g</span><span class="p">);</span>
+
+<span class="k">if</span><span class="p">(</span><span class="nx">t_graph</span><span class="p">.</span><span class="nx">isAcyclic</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">//do something</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+    <span class="c1">//do something else</span>
+<span class="p">}</span>
 </pre></div>
       </section>
       <footer>
