@@ -144,7 +144,7 @@ describe('Undirected Graph Creation', function () {
     });
     
     it('Can find an edge between two nodes', function () {
-        assert(t_graph.getEdgeBetween('F', 'G').name === '_e1');
+        assert(t_graph.getEdgeBetween('F', 'G').name === '_e6');
         assert(t_graph.getEdgeBetween('F', 'does_not_exist') === undefined);
     });
 
