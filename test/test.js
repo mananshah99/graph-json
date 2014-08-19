@@ -7,20 +7,22 @@
 /*global require, describe, before, it*/
 
 var assert = require('assert');
-var Graph = require('../lib/graph.js');
+var DG = require('../lib/graph.js').DirectedGraph;
+var UG = require('../lib/graph.js').UndirectedGraph;
+
 var fs = require('fs');
 var ts = JSON.parse(fs.readFileSync('./test/test_scheme.json'));
 
-describe('Graph Creation', function () {
+describe('Directed Graph Creation', function () {
     'use strict';
     
     var t_graph = null;
     before(function () {
-        t_graph = new Graph(ts);
+        t_graph = new DG(ts);
     });
     
     it('Can instantiate a graph with no structure', function () {
-        var no_structure = new Graph();
+        var no_structure = new DG();
         console.dir(no_structure);
     });
     
@@ -95,4 +97,55 @@ describe('Graph Creation', function () {
         assert(t_graph.dfs('B', 'A', t_graph) === t_graph.getNode('B'));
         assert(t_graph.dfs('dne', 'A', t_graph) === null);
     });
+});
+
+describe('Undirected Graph Creation', function () {
+    'use strict';
+    
+    var t_graph = null;
+    before(function () {
+        t_graph = new UG();
+    });
+    
+    it('Can instantiate a graph with no structure', function () {
+        var no_structure = new UG();
+        console.dir(no_structure);
+    });
+    
+    it('Has edges and nodes', function () {
+        assert(t_graph);
+        assert(t_graph.nodes);
+        assert(t_graph.edges);
+    });
+    
+    it('Can add a node', function() {
+        t_graph.addNode("XYZ");
+    });
+    
+    it('Can add a node with data', function() {
+        t_graph.addNode("DAT", "some data");
+    });
+    
+    it('Can add an edge between two nodes', function() {
+        t_graph.addEdge("sample-edge", "A", "XYZ", "__DATA__");
+    });
+    
+    it('Can add an adge without data', function() {
+        t_graph.addEdge("B->XYZ", "B", "XYZ");
+        console.dir(t_graph);
+    });
+    
+    it('Can add a sequence of nodes ', function() {
+        t_graph.add('F', 'G', 'H', 'I', 'J');
+    });
+    
+    it('Prints the structure of a graph after addition of nodes and edges', function() {
+        console.dir(t_graph);
+    });
+    
+    it('Can find an edge between two nodes', function () {
+        assert(t_graph.getEdgeBetween('F', 'G').name === '_e1');
+        assert(t_graph.getEdgeBetween('F', 'does_not_exist') === undefined);
+    });
+
 });

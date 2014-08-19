@@ -1,10 +1,10 @@
-# graph-json [![Build Status](https://travis-ci.org/mananshah99/graph-json.svg?branch=master)](https://travis-ci.org/mananshah99/graph-json) [![NPM version](https://badge.fury.io/js/graph-json.svg)](http://badge.fury.io/js/graph-json) [![Dependencies](https://www.versioneye.com/user/projects/53f2bfe813bb06a3d3000c24/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53f2bfe813bb06a3d3000c24/badge.svg?style=flat)
+# graph-json [![Build Status](https://travis-ci.org/mananshah99/graph-json.svg?branch=master)](https://travis-ci.org/mananshah99/graph-json) [![NPM version](https://badge.fury.io/js/graph-json.svg)](http://badge.fury.io/js/graph-json) [![Dependencies](https://www.versioneye.com/user/projects/53f2bfe813bb06a3d3000c24/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53f2bfe813bb06a3d3000c24)
 
 [![NPM](https://nodei.co/npm/graph-json.png?downloads=true)](https://nodei.co/npm/graph-json/)
 
-A JSON-format backed graph with basic identification algorithms. 
+A JSON-format backed graph library with advanced identification algorithms. 
 
-## JSON Scheme: 
+## JSON Scheme (DirectedGraph): 
 ```json
 {
     "type": "object",
@@ -47,26 +47,19 @@ A JSON-format backed graph with basic identification algorithms.
 
 ## Documentation
 
-### function ValidationError(message, err) 
+## DirectedGraph
 
-Specific error to the `graph-json` module that is thrown whenever a portion of the graph schema is unable to validated properly. 
-
-Potential times this error would be thrown are if: a) hanging edges exist in the graph, b) the JSON file provided does not match the default specification, c) no JSON file is provided, d) duplicate nodes are provided in the JSON file, or e) duplicate edges are provided in the JSON file.
-
-Example:
+You can use the `DirectedGraph` library in your project by either calling
 ```js
-var scheme = require('./scheme.json');
-
-//struct is the graph structure that's passed in
-var test = validator.validate(struct, scheme);
-if (test.errors.length > 0) {
-    return new ValidationError('Validation of Graph Failed: ', test.errors);
-}
+var DirectedGraph = require('graph-json').DirectedGraph;
 ```
+or
+```js
+var DirectedGraph = require('graph-json').DG;
+```
+### function DirectedGraph([struct])
 
-### function Graph([struct])
-
-Creates a graph based on the structure defined (a `.json` object matching the specification), or creates a graph with no edges and nodes if `struct` is not specified. 
+Creates a directed graph based on the structure defined (a `.json` object matching the specification), or creates a graph with no edges and nodes if `struct` is not specified. 
 
 An example struct would look like the following (used in the remainder of the documentation) 
 ```json
@@ -108,120 +101,120 @@ In order to create a graph, you'll want to parse your JSON object and pass it as
 var g = JSON.parse(fs.readFileSync('./graph.json'));
 
 //t_graph is the graph created from graph.json
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 ```
 Or, you can create a graph without specifying a JSON file: 
 ```js
-var t_graph = new Graph();
+var t_graph = new DirectedGraph();
 ```
 The graph above contains no nodes and no edges. 
 
-### Graph.prototype.edgesIn = function (node) 
+### DirectedGraph.prototype.edgesIn = function (node) 
 
 Returns the number of edges entering a given node. 
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 var x = t_graph.edgesIn('B');
 console.log(x[0].from); // #==> for the test graph, should print 'A'
 ```
 
-### Graph.prototype.edgesOut = function (node) 
+### DirectedGraph.prototype.edgesOut = function (node) 
 
 Returns the number of edges exiting a given node. 
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 var x = t_graph.edgesOut('A');
 console.log(x[0].to) // #==> for the test graph, should print 'B'
 ```
 
-### Graph.prototype.getNode = function (id) 
+### DirectedGraph.prototype.getNode = function (id) 
 
 Returns a node contained in the graph with the given name (`id`).
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 var node = t_graph.getNode('C'); // #==> assigns the variable node to the node of the graph with name 'C'
 ```
 
-### Graph.prototype.numNodes = function ()
+### DirectedGraph.prototype.numNodes = function ()
 
 Returns the number of nodes contained in the graph.
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 console.log(t_graph.numNodes()); // #==> prints '3' for the test graph
 ```
 
-### Graph.prorotype.getEdge = function (id) 
+### DirectedGraph.prorotype.getEdge = function (id) 
 
 Returns an edge contained in the graph with the given name (`id`).
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 var edge = t_graph.getEdge('BC'); // #==> assigns the variable edge to the edge of the graph with name 'BC'
 ```
 
-### Graph.prototype.numEdges = function () 
+### DirectedGraph.prototype.numEdges = function () 
 
 Returns the number of edges contained in the graph.
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 console.log(t_graph.numEdges()) // #==> prints '2' for the test graph
 ```
 
-### Graph.prototype.edges = function () 
+### DirectedGraph.prototype.edges = function () 
 
 Returns the edges array internally stored in `graph-json`. 
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 var edge_array = t_graph.edges();
 ```
 
-### Graph.prototype.isTerminal = function (node) 
+### DirectedGraph.prototype.isTerminal = function (node) 
 
 Returns `true` if the specified node is ternminal (has no children), and false otherwise. 
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 console.log(t_graph.isTerminal('T')); // #==> prints 'true' for the test graph
 ```
 
-### Graph.prototype.dfs = function (to_find, node, graph)
+### DirectedGraph.prototype.dfs = function (to_find, node, graph)
 
 Performs a depth-first-search on the given graph, searching for `to_find` starting from `node`. 
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 console.log((t_graph.dfs('B', 'A', t_graph)); // #==> prints 'B' for the test graph (search successful) 
 console.log((t_graph.dfs('dne', 'A', t_graph)); // #==> prints 'null' for the test graph (search failed) 
@@ -233,7 +226,7 @@ Returns an array of the "hanging edges" - edges that either have no `from` or `t
 
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 var x = hangingEdges(t_graph, t_graph.edges);
 if (x.length !== 0) {
@@ -242,66 +235,66 @@ if (x.length !== 0) {
 // #==> seeing as the test graph is properly defined, no validation error will be thrown.
 ```
 
-### Graph.prototype.addNode = function (name, [dt]) 
+### DirectedGraph.prototype.addNode = function (name, [dt]) 
 
 Adds a node to the graph with an optional parameter containing data. 
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
-g.addNode('A'); // adds node 'A' to the graph
-g.addNode('B', 'xyz'); // adds node 'B' to the graph, with data xyz
+t_graph.addNode('A'); // adds node 'A' to the graph
+t_graph.addNode('B', 'xyz'); // adds node 'B' to the graph, with data xyz
 ```
 
-### Graph.prototype.addEdge = function (name, from, to, [dt])
+### DirectedGraph.prototype.addEdge = function (name, from, to, [dt])
 
 Adds an edge to the graph with an optional parameter containing data.
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
-g.addEdge('A->B', 'A', 'B'); // adds edge 'A->B' to the graph from node A to node B
-g.addEdge('A->C', 'A', 'C', '10'); // adds edge 'A->C' to the graph from node A to node C with data 10
+t_graph.addEdge('A->B', 'A', 'B'); // adds edge 'A->B' to the graph from node A to node B
+t_graph.addEdge('A->C', 'A', 'C', '10'); // adds edge 'A->C' to the graph from node A to node C with data 10
 ```
 
-### Graph.prototype.add = function([nodes...]) 
+### DirectedGraph.prototype.add = function([nodes...]) 
 
 Adds any number of nodes to a graph, automatically creating the nodes if they do not exist and creating edges between each adjacent node.
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 // the following creates nodes 'a', 'b', 'c', and 'd' if they do not exist,
 // and then creates the edges a->b, b->c, and c->d
 t_graph.add('a', 'b', 'c', 'd'); 
 ```
 
-### Graph.prototype.tSort = function ()
+### DirectedGraph.prototype.tSort = function ()
 
 Topologically sorts the graph and returns the resulting node array.
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 console.log(t_graph.tSort()); //prints a comma-delimited topologically sorted node order of t_graph
 ```
 
-### Graph.prototype.isAcyclic = function ()
+### DirectedGraph.prototype.isAcyclic = function ()
 
 Returns `true` if the graph is acyclic, `false` otherwise. Uses a topological sort under the hood. 
 
 Example:
 ```js
 var g = JSON.parse(fs.readFileSync('./graph.json'));
-var t_graph = new Graph(g);
+var t_graph = new DirectedGraph(g);
 
 if(t_graph.isAcyclic()) {
     //do something
@@ -310,3 +303,7 @@ else {
     //do something else
 }
 ```
+
+## UndirectedGraph
+
+Need to add this documentation. 
