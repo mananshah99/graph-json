@@ -1,6 +1,6 @@
 # graph-json [![Build Status](https://travis-ci.org/mananshah99/graph-json.svg?branch=master)](https://travis-ci.org/mananshah99/graph-json) [![NPM version](https://badge.fury.io/js/graph-json.svg)](http://badge.fury.io/js/graph-json) [![Dependencies](https://www.versioneye.com/user/projects/53f2bfe813bb06a3d3000c24/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53f2bfe813bb06a3d3000c24)
 
-[![NPM](https://nodei.co/npm/graph-json.png?downloads=true)](https://nodei.co/npm/graph-json/)
+[![NPM](https://nodei.co/npm/graph-json.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/graph-json/)
 
 A JSON-format backed graph library with advanced identification algorithms. 
 
